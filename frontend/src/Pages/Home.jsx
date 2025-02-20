@@ -290,7 +290,7 @@ const FAQSection = () => {
             <p className="text-gray-400 mb-8">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
             </p>
-            <img src="/Faq.jpg" alt="FAQ" className="w-full  rounded-xl" />
+            <img src="/13-17.jpg" alt="FAQ" className="w-full  rounded-xl" />
             <button className="bg-[#CF992D] text-white mt-2 px-8 py-4 rounded-xl hover:bg-opacity-90 transition-all font-medium">
               Book Free Consultation
             </button>
