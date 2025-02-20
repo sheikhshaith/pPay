@@ -96,16 +96,8 @@
 
 // export default Footer;
 
-
-
-
-
-
-
-
-
-import React from 'react';
-import { Facebook, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import React from "react";
+import { Facebook, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -172,16 +164,26 @@ const Footer = () => {
                 <h3 className="text-2xl font-bold text-[#CF992D]">PangeaPay</h3>
               </div>
               <p className="text-white mb-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+                tellus, luctus nec.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="bg-[#C9C9C9] p-2 rounded-full hover:bg-[#CF992D] transition-colors">
+                <a
+                  href="#"
+                  className="bg-[#C9C9C9] p-2 rounded-full hover:bg-[#CF992D] transition-colors"
+                >
                   <Facebook size={20} className="text-[#29303A]" />
                 </a>
-                <a href="#" className="bg-[#C9C9C9] p-2 rounded-full hover:bg-[#CF992D] transition-colors">
+                <a
+                  href="#"
+                  className="bg-[#C9C9C9] p-2 rounded-full hover:bg-[#CF992D] transition-colors"
+                >
                   <Twitter size={20} className="text-[#29303A]" />
                 </a>
-                <a href="#" className="bg-[#C9C9C9] p-2 rounded-full hover:bg-[#CF992D] transition-colors">
+                <a
+                  href="#"
+                  className="bg-[#C9C9C9] p-2 rounded-full hover:bg-[#CF992D] transition-colors"
+                >
                   <Youtube size={20} className="text-[#29303A]" />
                 </a>
               </div>
@@ -189,12 +191,30 @@ const Footer = () => {
 
             {/* Our Services */}
             <div>
-              <h3 className="text-xl font-bold mb-6 text-[#CF992D]">Our Services</h3>
+              <h3 className="text-xl font-bold mb-6 text-[#CF992D]">
+                Our Services
+              </h3>
               <ul className="space-y-4">
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Budgeting And Forecasting</a></li>
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Strategy Consulting</a></li>
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Operational Consulting</a></li>
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Taxes & Accounting</a></li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Budgeting And Forecasting
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Strategy Consulting
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Operational Consulting
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Taxes & Accounting
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -202,16 +222,34 @@ const Footer = () => {
             <div>
               <h3 className="text-xl font-bold mb-6 text-[#CF992D]">Support</h3>
               <ul className="space-y-4">
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Privacy Policy</a></li>
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Disclaimer</a></li>
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Help & FAQ's</a></li>
-                <li><a href="#" className="text-white hover:text-[#CF992D]">Testimonials</a></li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Disclaimer
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Help & FAQ's
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-white hover:text-[#CF992D]">
+                    Testimonials
+                  </a>
+                </li>
               </ul>
             </div>
 
             {/* Contact Us */}
             <div>
-              <h3 className="text-xl font-bold mb-6 text-[#CF992D]">Contact Us</h3>
+              <h3 className="text-xl font-bold mb-6 text-[#CF992D]">
+                Contact Us
+              </h3>
               <ul className="space-y-4">
                 <li className="flex items-center gap-2 text-white">
                   <Phone size={20} className="text-[#CF992D]" />
@@ -234,7 +272,7 @@ const Footer = () => {
       {/* Copyright */}
       <div className="bg-[#C9C9C9] py-4">
         <div className="container mx-auto px-4 text-center text-black">
-          Copyright © 2025 Optibiz | Powered by Optibiz
+          Copyright © 2025 PangeaPay | Powered by PangeaPay
         </div>
       </div>
     </div>
