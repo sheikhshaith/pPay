@@ -12,7 +12,7 @@ CORS(app)
 # Configuration
 app.config["MONGO_URI"] = MONGO_URI
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB limit
+app.config['MAX_CONTENT_LENGTH'] = 128 * 1024 * 1024
 
 mongo = PyMongo(app)
 
