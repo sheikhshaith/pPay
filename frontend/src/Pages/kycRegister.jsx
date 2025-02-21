@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Upload, Video, Camera, FileText } from 'lucide-react';
+import React, { useState, useRef } from "react";
+import { Upload, Video, Camera, FileText } from "lucide-react";
 
 const KycRegister = () => {
   // Step state
@@ -9,28 +9,28 @@ const KycRegister = () => {
 
   // Form data state
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    dateOfBirth: '',
-    telegram: '',
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    nationality: 'United States',
-    zipCode: '',
-    walletAddress: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    dateOfBirth: "",
+    telegram: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    nationality: "United States",
+    zipCode: "",
+    walletAddress: "",
     documentFile: null,
     videoFile: null, // For uploaded video
     liveVideoFile: null, // For recorded live video
-    walletType: 'ethereum',
+    walletType: "ethereum",
     idCardFront: null,
     idCardBack: null,
     creditCardFront: null,
     creditCardBack: null,
-    selectedDocType: 'passport',
+    selectedDocType: "passport",
   });
 
   // Camera and recording states/refs
@@ -60,17 +60,17 @@ const KycRegister = () => {
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (files.length) {
-      if (name === 'idCardFrontUpload') {
+      if (name === "idCardFrontUpload") {
         setFormData((prev) => ({
           ...prev,
           idCardFront: URL.createObjectURL(files[0]),
         }));
-      } else if (name === 'idCardBackUpload') {
+      } else if (name === "idCardBackUpload") {
         setFormData((prev) => ({
           ...prev,
           idCardBack: URL.createObjectURL(files[0]),
         }));
-      } else if (name === 'videoFile') {
+      } else if (name === "videoFile") {
         setFormData((prev) => ({ ...prev, videoFile: files[0] }));
       } else {
         setFormData((prev) => ({ ...prev, [name]: files[0] }));
@@ -79,24 +79,24 @@ const KycRegister = () => {
   };
 
   // Handle image file upload using FileReader
-  const handleImageFileUpload = (e, side, type = 'id') => {
+  const handleImageFileUpload = (e, side, type = "id") => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        if (type === 'id') {
-          if (side === 'front') {
+        if (type === "id") {
+          if (side === "front") {
             setFormData((prev) => ({ ...prev, idCardFront: reader.result }));
-          } else if (side === 'back') {
+          } else if (side === "back") {
             setFormData((prev) => ({ ...prev, idCardBack: reader.result }));
           }
-        } else if (type === 'credit') {
-          if (side === 'front') {
+        } else if (type === "credit") {
+          if (side === "front") {
             setFormData((prev) => ({
               ...prev,
               creditCardFront: reader.result,
             }));
-          } else if (side === 'back') {
+          } else if (side === "back") {
             setFormData((prev) => ({
               ...prev,
               creditCardBack: reader.result,
@@ -109,17 +109,17 @@ const KycRegister = () => {
   };
 
   // Trigger click on hidden file input based on side and type
-  const triggerFileInput = (side, type = 'id') => {
-    if (type === 'id') {
-      if (side === 'front' && frontFileInputRef.current) {
+  const triggerFileInput = (side, type = "id") => {
+    if (type === "id") {
+      if (side === "front" && frontFileInputRef.current) {
         frontFileInputRef.current.click();
-      } else if (side === 'back' && backFileInputRef.current) {
+      } else if (side === "back" && backFileInputRef.current) {
         backFileInputRef.current.click();
       }
-    } else if (type === 'credit') {
-      if (side === 'front' && creditFrontFileInputRef.current) {
+    } else if (type === "credit") {
+      if (side === "front" && creditFrontFileInputRef.current) {
         creditFrontFileInputRef.current.click();
-      } else if (side === 'back' && creditBackFileInputRef.current) {
+      } else if (side === "back" && creditBackFileInputRef.current) {
         creditBackFileInputRef.current.click();
       }
     }
@@ -139,26 +139,26 @@ const KycRegister = () => {
 
     try {
       // Dummy backend URL pointing to our Flask MongoDB endpoint
-      const response = await fetch('http://localhost:5000/api/kyc', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/kyc", {
+        method: "POST",
         body: form,
       });
       const result = await response.json();
       if (response.ok) {
         setSubmissionMessage("Your information has been successfully sent.");
-        console.log('Submission successful:', result);
+        console.log("Submission successful:", result);
       } else {
         setSubmissionMessage("There was an error submitting your information.");
-        console.error('Submission error:', result);
+        console.error("Submission error:", result);
       }
     } catch (error) {
       setSubmissionMessage("There was an error submitting your information.");
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
 
   // Image Capture Functions
-  const openCamera = (side, type = 'id') => {
+  const openCamera = (side, type = "id") => {
     setCurrentCaptureSide(side);
     setIsCameraOpen(true);
     navigator.mediaDevices
@@ -171,7 +171,7 @@ const KycRegister = () => {
         }
       })
       .catch((error) => {
-        console.error('Error accessing camera: ', error);
+        console.error("Error accessing camera: ", error);
       });
   };
 
@@ -181,12 +181,12 @@ const KycRegister = () => {
     if (canvas && video) {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-      const context = canvas.getContext('2d');
+      const context = canvas.getContext("2d");
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/png');
-      if (currentCaptureSide === 'front') {
+      const dataUrl = canvas.toDataURL("image/png");
+      if (currentCaptureSide === "front") {
         setFormData((prev) => ({ ...prev, idCardFront: dataUrl }));
-      } else if (currentCaptureSide === 'back') {
+      } else if (currentCaptureSide === "back") {
         setFormData((prev) => ({ ...prev, idCardBack: dataUrl }));
       }
       if (streamRef.current) {
@@ -216,7 +216,7 @@ const KycRegister = () => {
           liveVideoRef.current.srcObject = stream;
           liveVideoRef.current.play();
         }
-        const options = { mimeType: 'video/webm' };
+        const options = { mimeType: "video/webm" };
         const recorder = new MediaRecorder(stream, options);
         let chunks = [];
         recorder.ondataavailable = (e) => {
@@ -225,7 +225,7 @@ const KycRegister = () => {
           }
         };
         recorder.onstop = () => {
-          const blob = new Blob(chunks, { type: 'video/webm' });
+          const blob = new Blob(chunks, { type: "video/webm" });
           const videoURL = URL.createObjectURL(blob);
           setFormData((prev) => ({ ...prev, liveVideoFile: videoURL }));
           if (streamRef.current) {
@@ -239,7 +239,7 @@ const KycRegister = () => {
         setIsRecording(true);
       })
       .catch((error) =>
-        console.error('Error accessing camera for recording: ', error)
+        console.error("Error accessing camera for recording: ", error)
       );
   };
 
@@ -277,30 +277,59 @@ const KycRegister = () => {
         {/* Progress Bar */}
         <div className="flex items-center mb-8">
           <div className="flex items-center">
-            <div className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${step >= 1 ? 'border-blue-600 bg-blue-600 text-white' : 'border-gray-300 bg-gray-100 text-gray-500'}`}>
+            <div
+              className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${
+                step >= 1
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-300 bg-gray-100 text-gray-500"
+              }`}
+            >
               1
             </div>
             <span className="ml-2 text-sm font-medium">Step 1</span>
           </div>
-          <div className={`flex-auto border-t-2 mx-2 ${step >= 2 ? 'border-blue-600' : 'border-gray-300'}`}></div>
+          <div
+            className={`flex-auto border-t-2 mx-2 ${
+              step >= 2 ? "border-blue-600" : "border-gray-300"
+            }`}
+          ></div>
           <div className="flex items-center">
-            <div className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${step >= 2 ? 'border-blue-600 bg-blue-600 text-white' : 'border-gray-300 bg-gray-100 text-gray-500'}`}>
+            <div
+              className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${
+                step >= 2
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-300 bg-gray-100 text-gray-500"
+              }`}
+            >
               2
             </div>
             <span className="ml-2 text-sm font-medium">Step 2</span>
           </div>
-          <div className={`flex-auto border-t-2 mx-2 ${step >= 3 ? 'border-blue-600' : 'border-gray-300'}`}></div>
+          <div
+            className={`flex-auto border-t-2 mx-2 ${
+              step >= 3 ? "border-blue-600" : "border-gray-300"
+            }`}
+          ></div>
           <div className="flex items-center">
-            <div className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${step >= 3 ? 'border-blue-600 bg-blue-600 text-white' : 'border-gray-300 bg-gray-100 text-gray-500'}`}>
+            <div
+              className={`h-8 w-8 rounded-full flex items-center justify-center border-2 ${
+                step >= 3
+                  ? "border-blue-600 bg-blue-600 text-white"
+                  : "border-gray-300 bg-gray-100 text-gray-500"
+              }`}
+            >
               3
             </div>
             <span className="ml-2 text-sm font-medium">Step 3</span>
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">KYC Verification</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
+          KYC Verification
+        </h1>
         <p className="text-center text-gray-600 mb-6">
-          Please fill out the form carefully. You won't be able to edit these details after submission.
+          Please fill out the form carefully. You won't be able to edit these
+          details after submission.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -309,54 +338,156 @@ const KycRegister = () => {
             <>
               <div className="border rounded-lg p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">01</div>
-                  <h2 className="text-xl font-semibold text-gray-700">Personal Details</h2>
+                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">
+                    01
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-700">
+                    Personal Details
+                  </h2>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-1">First Name*</label>
-                    <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-600 mb-1">
+                      First Name*
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name <span className="text-red-500">*</span></label>
-                    <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Last Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address <span className="text-red-500">*</span></label>
-                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email Address <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number <span className="text-red-500">*</span></label>
-                    <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth <span className="text-red-500">*</span></label>
-                    <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Date of Birth <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      name="dateOfBirth"
+                      value={formData.dateOfBirth}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Telegram Username</label>
-                    <input type="text" name="telegram" value={formData.telegram} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Telegram Username
+                    </label>
+                    <input
+                      type="text"
+                      name="telegram"
+                      value={formData.telegram}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    />
                   </div>
-                  <h3 className="text-lg font-medium text-blue-700 md:col-span-2 mt-4">Your Address</h3>
+                  <h3 className="text-lg font-medium text-blue-700 md:col-span-2 mt-4">
+                    Your Address
+                  </h3>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Address Line 1 <span className="text-red-500">*</span></label>
-                    <input type="text" name="addressLine1" value={formData.addressLine1} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Address Line 1 <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="addressLine1"
+                      value={formData.addressLine1}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
-                    <input type="text" name="addressLine2" value={formData.addressLine2} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Address Line 2
+                    </label>
+                    <input
+                      type="text"
+                      name="addressLine2"
+                      value={formData.addressLine2}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">City <span className="text-red-500">*</span></label>
-                    <input type="text" name="city" value={formData.city} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      City <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">State <span className="text-red-500">*</span></label>
-                    <input type="text" name="state" value={formData.state} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      State <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nationality <span className="text-red-500">*</span></label>
-                    <select name="nationality" value={formData.nationality} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Nationality <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      name="nationality"
+                      value={formData.nationality}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    >
                       <option value="United State">United State</option>
                       <option value="United Kingdom">United Kingdom</option>
                       <option value="Canada">Canada</option>
@@ -364,8 +495,17 @@ const KycRegister = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Zip Code <span className="text-red-500">*</span></label>
-                    <input type="text" name="zipCode" value={formData.zipCode} onChange={handleInputChange} className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150" required />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Zip Code <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="zipCode"
+                      value={formData.zipCode}
+                      onChange={handleInputChange}
+                      className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                      required
+                    />
                   </div>
                 </div>
               </div>
@@ -376,32 +516,69 @@ const KycRegister = () => {
             <>
               <div className="border rounded-lg p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">02</div>
-                  <h2 className="text-xl font-semibold text-gray-700">Document Upload</h2>
+                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">
+                    02
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-700">
+                    Document Upload
+                  </h2>
                 </div>
                 <div className="mb-6">
                   <p className="text-sm text-gray-600 mb-2">
                     <span className="inline-flex items-center mr-2">
-                      <svg className="w-4 h-4 text-blue-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      <svg
+                        className="w-4 h-4 text-blue-500 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clipRule="evenodd"
+                        />
                       </svg>
-                      In order to complete, please upload any of the following personal document.
+                      In order to complete, please upload any of the following
+                      personal document.
                     </span>
                   </p>
                   <div className="flex flex-wrap gap-4 mb-6">
-                    <button type="button" onClick={() => handleDocTypeSelect('passport')} className={`flex items-center p-4 border rounded-lg transition-all ${formData.selectedDocType === 'passport' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'}`}>
+                    <button
+                      type="button"
+                      onClick={() => handleDocTypeSelect("passport")}
+                      className={`flex items-center p-4 border rounded-lg transition-all ${
+                        formData.selectedDocType === "passport"
+                          ? "border-blue-500 bg-blue-50"
+                          : "border-gray-200 hover:border-blue-300"
+                      }`}
+                    >
                       <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                         <FileText className="w-5 h-5 text-blue-600" />
                       </div>
                       <span className="font-medium">PASSPORT</span>
                     </button>
-                    <button type="button" onClick={() => handleDocTypeSelect('national_card')} className={`flex items-center p-4 border rounded-lg transition-all ${formData.selectedDocType === 'national_card' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'}`}>
+                    <button
+                      type="button"
+                      onClick={() => handleDocTypeSelect("national_card")}
+                      className={`flex items-center p-4 border rounded-lg transition-all ${
+                        formData.selectedDocType === "national_card"
+                          ? "border-blue-500 bg-blue-50"
+                          : "border-gray-200 hover:border-blue-300"
+                      }`}
+                    >
                       <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                         <FileText className="w-5 h-5 text-blue-600" />
                       </div>
                       <span className="font-medium">NATIONAL CARD</span>
                     </button>
-                    <button type="button" onClick={() => handleDocTypeSelect('drivers_license')} className={`flex items-center p-4 border rounded-lg transition-all ${formData.selectedDocType === 'drivers_license' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'}`}>
+                    <button
+                      type="button"
+                      onClick={() => handleDocTypeSelect("drivers_license")}
+                      className={`flex items-center p-4 border rounded-lg transition-all ${
+                        formData.selectedDocType === "drivers_license"
+                          ? "border-blue-500 bg-blue-50"
+                          : "border-gray-200 hover:border-blue-300"
+                      }`}
+                    >
                       <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                         <FileText className="w-5 h-5 text-blue-600" />
                       </div>
@@ -409,50 +586,113 @@ const KycRegister = () => {
                     </button>
                   </div>
                   <div className="mb-6">
-                    <h3 className="text-lg font-medium text-gray-700 mb-3">To avoid delays when verifying your account, please ensure:</h3>
+                    <h3 className="text-lg font-medium text-gray-700 mb-3">
+                      To avoid delays when verifying your account, please
+                      ensure:
+                    </h3>
                     <ul className="space-y-2">
                       <li className="flex items-start">
-                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        <svg
+                          className="w-5 h-5 text-green-500 mr-2 mt-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          ></path>
                         </svg>
-                        <span className="text-gray-600">The credential is not expired.</span>
+                        <span className="text-gray-600">
+                          The credential is not expired.
+                        </span>
                       </li>
                       <li className="flex items-start">
-                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        <svg
+                          className="w-5 h-5 text-green-500 mr-2 mt-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          ></path>
                         </svg>
-                        <span className="text-gray-600">Document is in good condition and clearly visible.</span>
+                        <span className="text-gray-600">
+                          Document is in good condition and clearly visible.
+                        </span>
                       </li>
                       <li className="flex items-start">
-                        <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                        <svg
+                          className="w-5 h-5 text-green-500 mr-2 mt-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          ></path>
                         </svg>
-                        <span className="text-gray-600">Ensure no glare is present on the card.</span>
+                        <span className="text-gray-600">
+                          Ensure no glare is present on the card.
+                        </span>
                       </li>
                     </ul>
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-700 mb-3">
-                      Upload or Capture{' '}
-                      {formData.selectedDocType === 'passport'
-                        ? 'Passport'
-                        : formData.selectedDocType === 'national_card'
-                        ? 'National Card'
-                        : "Driver's License"}{' '}
+                      Upload or Capture{" "}
+                      {formData.selectedDocType === "passport"
+                        ? "Passport"
+                        : formData.selectedDocType === "national_card"
+                        ? "National Card"
+                        : "Driver's License"}{" "}
                       Images
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="border rounded-lg p-4">
-                        <h4 className="text-center font-medium mb-4">Front Side</h4>
-                        <input type="file" ref={frontFileInputRef} accept="image/*" onChange={(e) => handleImageFileUpload(e, 'front', 'id')} className="hidden" />
+                        <h4 className="text-center font-medium mb-4">
+                          Front Side
+                        </h4>
+                        <input
+                          type="file"
+                          ref={frontFileInputRef}
+                          accept="image/*"
+                          onChange={(e) =>
+                            handleImageFileUpload(e, "front", "id")
+                          }
+                          className="hidden"
+                        />
                         {formData.idCardFront ? (
                           <div className="relative">
-                            <img src={formData.idCardFront} alt="ID Card Front" className="w-full h-48 object-contain border rounded" />
+                            <img
+                              src={formData.idCardFront}
+                              alt="ID Card Front"
+                              className="w-full h-48 object-contain border rounded"
+                            />
                             <div className="absolute bottom-2 right-2 flex space-x-2">
-                              <button type="button" onClick={() => openCamera('front', 'id')} className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700" title="Take photo">
+                              <button
+                                type="button"
+                                onClick={() => openCamera("front", "id")}
+                                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
+                                title="Take photo"
+                              >
                                 <Camera className="w-5 h-5" />
                               </button>
-                              <button type="button" onClick={() => triggerFileInput('front', 'id')} className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700" title="Upload image">
+                              <button
+                                type="button"
+                                onClick={() => triggerFileInput("front", "id")}
+                                className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700"
+                                title="Upload image"
+                              >
                                 <Upload className="w-5 h-5" />
                               </button>
                             </div>
@@ -460,29 +700,65 @@ const KycRegister = () => {
                         ) : (
                           <div className="w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center bg-gray-50">
                             <div className="grid grid-cols-2 gap-4 w-full px-8">
-                              <button type="button" onClick={() => openCamera('front', 'id')} className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                              <button
+                                type="button"
+                                onClick={() => openCamera("front", "id")}
+                                className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                              >
                                 <Camera className="w-8 h-8 text-blue-500 mb-2" />
-                                <p className="text-sm text-gray-600">Take photo</p>
+                                <p className="text-sm text-gray-600">
+                                  Take photo
+                                </p>
                               </button>
-                              <button type="button" onClick={() => triggerFileInput('front', 'id')} className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                              <button
+                                type="button"
+                                onClick={() => triggerFileInput("front", "id")}
+                                className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition"
+                              >
                                 <Upload className="w-8 h-8 text-green-500 mb-2" />
-                                <p className="text-sm text-gray-600">Upload image</p>
+                                <p className="text-sm text-gray-600">
+                                  Upload image
+                                </p>
                               </button>
                             </div>
                           </div>
                         )}
                       </div>
                       <div className="border rounded-lg p-4">
-                        <h4 className="text-center font-medium mb-4">Back Side</h4>
-                        <input type="file" ref={backFileInputRef} accept="image/*" onChange={(e) => handleImageFileUpload(e, 'back', 'id')} className="hidden" />
+                        <h4 className="text-center font-medium mb-4">
+                          Back Side
+                        </h4>
+                        <input
+                          type="file"
+                          ref={backFileInputRef}
+                          accept="image/*"
+                          onChange={(e) =>
+                            handleImageFileUpload(e, "back", "id")
+                          }
+                          className="hidden"
+                        />
                         {formData.idCardBack ? (
                           <div className="relative">
-                            <img src={formData.idCardBack} alt="ID Card Back" className="w-full h-48 object-contain border rounded" />
+                            <img
+                              src={formData.idCardBack}
+                              alt="ID Card Back"
+                              className="w-full h-48 object-contain border rounded"
+                            />
                             <div className="absolute bottom-2 right-2 flex space-x-2">
-                              <button type="button" onClick={() => openCamera('back', 'id')} className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700" title="Take photo">
+                              <button
+                                type="button"
+                                onClick={() => openCamera("back", "id")}
+                                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
+                                title="Take photo"
+                              >
                                 <Camera className="w-5 h-5" />
                               </button>
-                              <button type="button" onClick={() => triggerFileInput('back', 'id')} className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700" title="Upload image">
+                              <button
+                                type="button"
+                                onClick={() => triggerFileInput("back", "id")}
+                                className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700"
+                                title="Upload image"
+                              >
                                 <Upload className="w-5 h-5" />
                               </button>
                             </div>
@@ -490,13 +766,25 @@ const KycRegister = () => {
                         ) : (
                           <div className="w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center bg-gray-50">
                             <div className="grid grid-cols-2 gap-4 w-full px-8">
-                              <button type="button" onClick={() => openCamera('back', 'id')} className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                              <button
+                                type="button"
+                                onClick={() => openCamera("back", "id")}
+                                className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                              >
                                 <Camera className="w-8 h-8 text-blue-500 mb-2" />
-                                <p className="text-sm text-gray-600">Take photo</p>
+                                <p className="text-sm text-gray-600">
+                                  Take photo
+                                </p>
                               </button>
-                              <button type="button" onClick={() => triggerFileInput('back', 'id')} className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                              <button
+                                type="button"
+                                onClick={() => triggerFileInput("back", "id")}
+                                className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition"
+                              >
                                 <Upload className="w-8 h-8 text-green-500 mb-2" />
-                                <p className="text-sm text-gray-600">Upload image</p>
+                                <p className="text-sm text-gray-600">
+                                  Upload image
+                                </p>
                               </button>
                             </div>
                           </div>
@@ -505,7 +793,11 @@ const KycRegister = () => {
                     </div>
                     <div className="mt-6 flex justify-center">
                       <div className="w-full relative">
-                        <img src="/Image-1.jpg" alt="Example ID card" className="w-full rounded-lg shadow-md" />
+                        <img
+                          src="/Image-1.jpg"
+                          alt="Example ID card"
+                          className="w-full rounded-lg shadow-md"
+                        />
                       </div>
                     </div>
                   </div>
@@ -518,45 +810,95 @@ const KycRegister = () => {
             <>
               <div className="border rounded-lg p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">03</div>
-                  <h2 className="text-xl font-semibold text-gray-700">Credit Card Information</h2>
+                  <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">
+                    03
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-700">
+                    Credit Card Information
+                  </h2>
                 </div>
                 <div className="mb-6">
                   <p className="text-sm text-gray-600 mb-4">
                     <span className="inline-flex items-center">
-                      <svg className="w-4 h-4 text-blue-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      <svg
+                        className="w-4 h-4 text-blue-500 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clipRule="evenodd"
+                        />
                       </svg>
-                      Please provide clear images of the front and back of your credit card.
+                      Please provide clear images of the front and back of your
+                      credit card.
                     </span>
                   </p>
                   <div className="mb-6 bg-yellow-50 border-l-4 border-yellow-400 p-4">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        <svg
+                          className="h-5 w-5 text-yellow-400"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-yellow-700">
-                          For your security, cover the middle 8 digits of your card number and the CVV code on the back.
+                          For your security, cover the middle 8 digits of your
+                          card number and the CVV code on the back.
                         </p>
                       </div>
                     </div>
                   </div>
-                  <h3 className="text-lg font-medium text-gray-700 mb-3">Upload or Capture Credit Card Images</h3>
+                  <h3 className="text-lg font-medium text-gray-700 mb-3">
+                    Upload or Capture Credit Card Images
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="border rounded-lg p-4">
-                      <h4 className="text-center font-medium mb-4">Front Side</h4>
-                      <input type="file" ref={creditFrontFileInputRef} accept="image/*" onChange={(e) => handleImageFileUpload(e, 'front', 'credit')} className="hidden" />
+                      <h4 className="text-center font-medium mb-4">
+                        Front Side
+                      </h4>
+                      <input
+                        type="file"
+                        ref={creditFrontFileInputRef}
+                        accept="image/*"
+                        onChange={(e) =>
+                          handleImageFileUpload(e, "front", "credit")
+                        }
+                        className="hidden"
+                      />
                       {formData.creditCardFront ? (
                         <div className="relative">
-                          <img src={formData.creditCardFront} alt="Credit Card Front" className="w-full h-48 object-contain border rounded" />
+                          <img
+                            src={formData.creditCardFront}
+                            alt="Credit Card Front"
+                            className="w-full h-48 object-contain border rounded"
+                          />
                           <div className="absolute bottom-2 right-2 flex space-x-2">
-                            <button type="button" onClick={() => openCamera('front', 'credit')} className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700" title="Take photo">
+                            <button
+                              type="button"
+                              onClick={() => openCamera("front", "credit")}
+                              className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
+                              title="Take photo"
+                            >
                               <Camera className="w-5 h-5" />
                             </button>
-                            <button type="button" onClick={() => triggerFileInput('front', 'credit')} className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700" title="Upload image">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                triggerFileInput("front", "credit")
+                              }
+                              className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700"
+                              title="Upload image"
+                            >
                               <Upload className="w-5 h-5" />
                             </button>
                           </div>
@@ -564,29 +906,67 @@ const KycRegister = () => {
                       ) : (
                         <div className="w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center bg-gray-50">
                           <div className="grid grid-cols-2 gap-4 w-full px-8">
-                            <button type="button" onClick={() => openCamera('front', 'credit')} className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                            <button
+                              type="button"
+                              onClick={() => openCamera("front", "credit")}
+                              className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                            >
                               <Camera className="w-8 h-8 text-blue-500 mb-2" />
-                              <p className="text-sm text-gray-600">Take photo</p>
+                              <p className="text-sm text-gray-600">
+                                Take photo
+                              </p>
                             </button>
-                            <button type="button" onClick={() => triggerFileInput('front', 'credit')} className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                triggerFileInput("front", "credit")
+                              }
+                              className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition"
+                            >
                               <Upload className="w-8 h-8 text-green-500 mb-2" />
-                              <p className="text-sm text-gray-600">Upload image</p>
+                              <p className="text-sm text-gray-600">
+                                Upload image
+                              </p>
                             </button>
                           </div>
                         </div>
                       )}
                     </div>
                     <div className="border rounded-lg p-4">
-                      <h4 className="text-center font-medium mb-4">Back Side</h4>
-                      <input type="file" ref={creditBackFileInputRef} accept="image/*" onChange={(e) => handleImageFileUpload(e, 'back', 'credit')} className="hidden" />
+                      <h4 className="text-center font-medium mb-4">
+                        Back Side
+                      </h4>
+                      <input
+                        type="file"
+                        ref={creditBackFileInputRef}
+                        accept="image/*"
+                        onChange={(e) =>
+                          handleImageFileUpload(e, "back", "credit")
+                        }
+                        className="hidden"
+                      />
                       {formData.creditCardBack ? (
                         <div className="relative">
-                          <img src={formData.creditCardBack} alt="Credit Card Back" className="w-full h-48 object-contain border rounded" />
+                          <img
+                            src={formData.creditCardBack}
+                            alt="Credit Card Back"
+                            className="w-full h-48 object-contain border rounded"
+                          />
                           <div className="absolute bottom-2 right-2 flex space-x-2">
-                            <button type="button" onClick={() => openCamera('back', 'credit')} className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700" title="Take photo">
+                            <button
+                              type="button"
+                              onClick={() => openCamera("back", "credit")}
+                              className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700"
+                              title="Take photo"
+                            >
                               <Camera className="w-5 h-5" />
                             </button>
-                            <button type="button" onClick={() => triggerFileInput('back', 'credit')} className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700" title="Upload image">
+                            <button
+                              type="button"
+                              onClick={() => triggerFileInput("back", "credit")}
+                              className="bg-green-600 text-white p-2 rounded-full hover:bg-green-700"
+                              title="Upload image"
+                            >
                               <Upload className="w-5 h-5" />
                             </button>
                           </div>
@@ -594,13 +974,25 @@ const KycRegister = () => {
                       ) : (
                         <div className="w-full h-48 border-2 border-dashed rounded-lg flex flex-col items-center justify-center bg-gray-50">
                           <div className="grid grid-cols-2 gap-4 w-full px-8">
-                            <button type="button" onClick={() => openCamera('back', 'credit')} className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                            <button
+                              type="button"
+                              onClick={() => openCamera("back", "credit")}
+                              className="flex flex-col items-center justify-center py-4 px-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition"
+                            >
                               <Camera className="w-8 h-8 text-blue-500 mb-2" />
-                              <p className="text-sm text-gray-600">Take photo</p>
+                              <p className="text-sm text-gray-600">
+                                Take photo
+                              </p>
                             </button>
-                            <button type="button" onClick={() => triggerFileInput('back', 'credit')} className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                            <button
+                              type="button"
+                              onClick={() => triggerFileInput("back", "credit")}
+                              className="flex flex-col items-center justify-center py-4 px-2 bg-green-50 rounded-lg hover:bg-green-100 transition"
+                            >
                               <Upload className="w-8 h-8 text-green-500 mb-2" />
-                              <p className="text-sm text-gray-600">Upload image</p>
+                              <p className="text-sm text-gray-600">
+                                Upload image
+                              </p>
                             </button>
                           </div>
                         </div>
@@ -609,15 +1001,26 @@ const KycRegister = () => {
                   </div>
                   <div className="mt-6 flex justify-center">
                     <div className="w-full relative">
-                      <img src="/ccc.png" alt="Example credit card" className="w-full rounded-lg shadow-md" />
+                      <img
+                        src="/ccc.png"
+                        alt="Example credit card"
+                        className="w-full rounded-lg shadow-md"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-blue-500 transition duration-150">
                 <Camera className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-sm text-gray-600">Record a live video saying "I confirm this is my KYC application"</p>
-                <button type="button" onClick={handleLiveVideoCapture} className="inline-block px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer transition duration-150">
+                <p className="text-sm text-gray-600">
+                  Record a live video saying "I confirm this is my KYC
+                  application"
+                </p>
+                <button
+                  type="button"
+                  onClick={handleLiveVideoCapture}
+                  className="inline-block px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer transition duration-150"
+                >
                   Record Video
                 </button>
                 {formData.liveVideoFile && (
@@ -629,57 +1032,109 @@ const KycRegister = () => {
               </div>
               <div className="border-2 border-dashed rounded-lg p-6 text-center hover:border-blue-500 transition duration-150">
                 <Video className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-sm text-gray-600">Record or upload a short video saying "I confirm this is my KYC application"</p>
-                <input type="file" name="videoFile" onChange={handleFileChange} accept="video/mp4" style={{ display: 'none' }} id="video-upload" />
-                <label htmlFor="video-upload" className="inline-block px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition duration-150">
+                <p className="text-sm text-gray-600">
+                  Record or upload a short video saying "I confirm this is my
+                  KYC application"
+                </p>
+                <input
+                  type="file"
+                  name="videoFile"
+                  onChange={handleFileChange}
+                  accept="video/mp4"
+                  style={{ display: "none" }}
+                  id="video-upload"
+                />
+                <label
+                  htmlFor="video-upload"
+                  className="inline-block px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer transition duration-150"
+                >
                   Upload Video
                 </label>
                 {formData.videoFile ? (
                   <video controls className="mt-4 w-full">
-                    <source src={URL.createObjectURL(formData.videoFile)} type="video/mp4" />
+                    <source
+                      src={URL.createObjectURL(formData.videoFile)}
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                 ) : (
-                  <p className="mt-4 text-sm text-gray-600">No video uploaded</p>
+                  <p className="mt-4 text-sm text-gray-600">
+                    No video uploaded
+                  </p>
                 )}
               </div>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" id="terms" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" required />
-                  <label htmlFor="terms" className="text-sm text-gray-600">I have Read The Terms Of Condition and Privacy Policy.</label>
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    required
+                  />
+                  <label htmlFor="terms" className="text-sm text-gray-600">
+                    I have Read The Terms Of Condition and Privacy Policy.
+                  </label>
                 </div>
               </div>
             </>
           )}
           <div className="flex justify-between mt-6">
             {step > 1 && (
-              <button type="button" onClick={prevStep} className="px-6 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition duration-150">
+              <button
+                type="button"
+                onClick={prevStep}
+                className="px-6 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition duration-150"
+              >
                 Previous
               </button>
             )}
             {step < 3 && (
-              <button type="button" onClick={nextStep} className="ml-auto px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-150">
+              <button
+                type="button"
+                onClick={nextStep}
+                className="ml-auto px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-150"
+              >
                 Next
               </button>
             )}
             {step === 3 && (
-              <button type="submit" className="ml-auto px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-150">
+              <button
+                type="submit"
+                className="ml-auto px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-150"
+              >
                 Proceed for Verify
               </button>
             )}
           </div>
         </form>
-        {submissionMessage && <div className="mt-4 text-center text-lg text-green-600">{submissionMessage}</div>}
+        {submissionMessage && (
+          <div className="mt-4 text-center text-lg text-green-600">
+            {submissionMessage}
+          </div>
+        )}
       </div>
       {isCameraOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg relative max-w-xl w-full">
-            <h3 className="text-lg font-medium text-center mb-2">Capture {currentCaptureSide === 'front' ? 'Front' : 'Back'} Side</h3>
+            <h3 className="text-lg font-medium text-center mb-2">
+              Capture {currentCaptureSide === "front" ? "Front" : "Back"} Side
+            </h3>
             <video ref={videoRef} className="w-full border rounded" autoPlay />
-            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <canvas ref={canvasRef} style={{ display: "none" }} />
             <div className="mt-4 flex justify-center gap-4">
-              <button onClick={captureImage} className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-150">Capture Image</button>
-              <button onClick={closeCamera} className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-150">Cancel</button>
+              <button
+                onClick={captureImage}
+                className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-150"
+              >
+                Capture Image
+              </button>
+              <button
+                onClick={closeCamera}
+                className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-150"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -687,11 +1142,27 @@ const KycRegister = () => {
       {isRecordingModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg relative max-w-xl w-full">
-            <h3 className="text-lg font-medium text-center mb-2">Live Video Recording</h3>
-            <video ref={liveVideoRef} className="w-full border rounded" autoPlay />
+            <h3 className="text-lg font-medium text-center mb-2">
+              Live Video Recording
+            </h3>
+            <video
+              ref={liveVideoRef}
+              className="w-full border rounded"
+              autoPlay
+            />
             <div className="mt-4 flex justify-center gap-4">
-              <button onClick={stopRecording} className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition duration-150">Stop Recording</button>
-              <button onClick={cancelRecording} className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-150">Cancel</button>
+              <button
+                onClick={stopRecording}
+                className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition duration-150"
+              >
+                Stop Recording
+              </button>
+              <button
+                onClick={cancelRecording}
+                className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition duration-150"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
