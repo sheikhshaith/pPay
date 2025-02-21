@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\ahmad\OneDrive\Desktop\Office\pPay\backend\venv
+set VIRTUAL_ENV=C:\Users\LENOVO\3D Objects\OneDrive\Desktop\Sociosync\Sociosync\companyweb\pPay\Backend\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

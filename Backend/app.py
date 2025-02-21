@@ -6,8 +6,11 @@ from werkzeug.utils import secure_filename
 from config import MONGO_URI
 from flask_pymongo import PyMongo
 
+# Mine
+from auth import auth_bp, init_mongo
 app = Flask(__name__)
 CORS(app)
+
 
 # Configuration
 app.config["MONGO_URI"] = MONGO_URI
@@ -79,6 +82,19 @@ def list_submissions():
                 submission[key] = request.host_url + 'uploads/' + os.path.basename(submission[key])
     return jsonify(submissions), 200
 
+
+####### mine
+
+# Configuration
+app.config['MONGO_URI'] = MONGO_URI
+app.config['SECRET_KEY'] = '1234ewqa'  # Change this
+mongo = PyMongo(app)
+init_mongo(app)  # Initialize MongoDB
+# Register the auth blueprint with a URL prefix
+app.register_blueprint(auth_bp, url_prefix='/api/auth')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-app.py
+
