@@ -10,6 +10,9 @@ import KYC from "./Pages/KYCv";
 import KycRegister from "./Pages/kycRegister";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import RegisterPage from "./Pages/RegisterPage";
+import Login from "./Pages/Login";
+import Forget from "./Pages/Forget";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -30,6 +33,9 @@ function Layout() {
         <Route path="/" element={<Home />} />
         <Route path="/kyc" element={<KYC />} />
         <Route path="/kycRegister" element={<KycRegister />} />
+        <Route path="/RegisterPage" element={<RegisterPage />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Forget" element={<Forget />} />
       </Routes>
       <Footer />
     </>
